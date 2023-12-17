@@ -28,6 +28,8 @@ int main(int argc, char** argv) {
     int x_nums = int((x_n - x_0) / h);
     int N = int((t_n - t_0) / dT);
 
+    int local_size = x_nums / size;
+    vector<vector<double>> C(N + 1, vector<double>(x_nums + 1));
 
     return 0;
 }
