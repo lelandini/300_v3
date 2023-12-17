@@ -54,5 +54,23 @@ int main(int argc, char** argv) {
 
     MPI_Finalize();
 
+    // Вывод результатов на 0 процессе
+    if (rank == 0) {
+        cout << "dT = " << dT << "; h = " << h << '\n';
+        cout << "| t\\x|";
+        for (int i = 0; i < x_nums + 1; i++) {
+            cout << setw(8) << fixed << setprecision(3) << x_0 + h * i << "|";
+        }
+        cout << endl;
+
+        for (int i = 0; i < N + 1; i++) {
+            cout << setw(5) << fixed << setprecision(3) << t_0 + dT * i << "|";
+            for (int j = 0; j < x_nums + 1; j++) {
+                cout << setw(8) << fixed << setprecision(3) << C[i][j] << "|";
+            }
+            cout << endl;
+        }
+    }
+
     return 0;
 }
