@@ -39,5 +39,14 @@ int main(int argc, char** argv) {
         }
     }
 
+    // Решение уравнения
+    for (int n = 0; n < N; n++) {
+
+        for (int x_index = rank * local_size + 1; x_index <= (rank + 1) * local_size; x_index++) {
+            C[n + 1][x_index] = recur(C, dT, h, n, x_index);
+        }
+        
+    }
+
     return 0;
 }
