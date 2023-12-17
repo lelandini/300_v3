@@ -31,5 +31,13 @@ int main(int argc, char** argv) {
     int local_size = x_nums / size;
     vector<vector<double>> C(N + 1, vector<double>(x_nums + 1));
 
+    // Установка начальных условий
+    for (int x_index = 0; x_index <= x_nums; x_index++) {
+        C[0][x_index] = sin(x_0 + h * x_index) + 1.0;
+        for (int N_index = 1; N_index <= N; N_index++){
+            C[N_index][0] = 1.0;
+        }
+    }
+
     return 0;
 }
