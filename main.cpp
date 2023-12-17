@@ -28,6 +28,15 @@ int main(int argc, char** argv) {
     int x_nums = int((x_n - x_0) / h);
     int N = int((t_n - t_0) / dT);
 
+    // Проверка, является ли size делителем x_nums
+    if (x_nums % size != 0) {
+        if (rank == 0){
+            cerr << "Ошибка! Количество процессов не является подходящим" << endl;
+        }
+        MPI_Finalize();
+        return 1;
+    }
+
     int local_size = x_nums / size;
     vector<vector<double>> C(N + 1, vector<double>(x_nums + 1));
 
