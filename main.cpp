@@ -42,11 +42,17 @@ int main(int argc, char** argv) {
     // Решение уравнения
     for (int n = 0; n < N; n++) {
 
+        MPI_Bcast(&C[n][0], C[0].size(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
         for (int x_index = rank * local_size + 1; x_index <= (rank + 1) * local_size; x_index++) {
             C[n + 1][x_index] = recur(C, dT, h, n, x_index);
         }
-        
+
+        // Сбор результатов на нулевом процессе
+        MPI_Gather(&C[n + 1][rank * local_size + 1], local_size, MPI_DOUBLE, &C[n + 1][1], local_size, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
+
+    MPI_Finalize();
 
     return 0;
 }
