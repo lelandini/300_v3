@@ -1,19 +1,19 @@
 name: Code checks
 
 on:
-push:
-branches: [ test ]
-pull_request:
-branches: [ test ]
+  push:
+    branches: [ test ]
+  pull_request:
+    branches: [ test ]
 
 jobs:
-build:
-runs-on: ubuntu-latest
-steps:
-- uses: actions/checkout@v3
-- name: installation
-run: sudo apt install -y googletest libgtest-dev build-essential gcovr
-- name: make
-run: g++ -std=c++17 -I/usr/include/gtest -L/usr/lib/x86_64-linux-gnu Test.cpp -o program.out -lgtest -lpthread
-- name: execute
-run: ./program.out
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: installation
+        run: sudo apt install -y googletest libgtest-dev build-essential gcovr
+      - name: make
+        run: g++ -std=c++17 -I/usr/include/gtest -L/usr/lib/x86_64-linux-gnu Test.cpp -o program.out -lgtest -lpthread
+      - name: execute
+        run: ./program.out
