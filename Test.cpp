@@ -1,7 +1,15 @@
 #include <gtest/gtest.h>
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <iomanip>
+#include <mpi.h>
+#include <unistd.h>
 
 // Подключаем функции из основного кода
-double recur(vector<vector<double>>& C, double dT, double h, int n, int j);
+double recur(vector<vector<double>>& C, double dT, double h, int n, int j) {
+    return C[n][j] - n * dT * dT * (C[n][j] - C[n][j - 1]) / h + 4 * (j - 1) * h * dT;
+}
 void solveEquationMPI(double dT, double h, double x_0, double x_n, double t_0, double t_n, int size, vector<vector<double>>& C);
 
 // Тест для проверки начального условия
