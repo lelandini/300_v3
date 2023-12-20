@@ -50,6 +50,28 @@ TEST(BorderConditionTest, CheckBorderCondition) {
     }
 }
 
+// Тест для проверки размерности матрицы
+TEST(MatrixSizeTest, CheckMatrixSize) {
+    double dT = 0.1;
+    double h = 0.1;
+    double x_0 = 0;
+    double x_n = 1;
+    double t_0 = 0;
+    double t_n = 1;
+
+    int x_nums = int((x_n - x_0) / h);
+    int N = int((t_n - t_0) / dT);
+
+    vector<vector<double>> C(N + 1, vector<double>(x_nums + 1));
+
+    // Запускаем функцию для решения уравнения
+    solveEquationMPI(dT, h, x_0, x_n, t_0, t_n, 1, C);
+
+    // Проверяем, что матрица имеет правильные размеры
+    ASSERT_EQ(C.size(), N + 1);
+    ASSERT_EQ(C[0].size(), x_nums + 1);
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
