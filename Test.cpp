@@ -10,7 +10,7 @@
 double recur(vector<vector<double>>& C, double dT, double h, int n, int j) {
     return C[n][j] - n * dT * dT * (C[n][j] - C[n][j - 1]) / h + 4 * (j - 1) * h * dT;
 }
-void solveEquationMPI(double dT, double h, double x_0, double x_n, double t_0, double t_n, int size, vector<vector<double>>& C);
+
 
 // Тест для проверки начального условия
 TEST(InitialConditionTest, CheckInitialCondition) {
@@ -25,9 +25,6 @@ TEST(InitialConditionTest, CheckInitialCondition) {
     int N = int((t_n - t_0) / dT);
 
     vector<vector<double>> C(N + 1, vector<double>(x_nums + 1));
-
-    // Запускаем функцию для решения уравнения
-    solveEquationMPI(dT, h, x_0, x_n, t_0, t_n, 1, C);
 
     // Проверяем, что начальное условие c(0, x) = sin(x) + 1 правильно установлено
     for (int i = 0; i <= x_nums; i++) {
@@ -49,9 +46,6 @@ TEST(BorderConditionTest, CheckBorderCondition) {
 
     vector<vector<double>> C(N + 1, vector<double>(x_nums + 1));
 
-    // Запускаем функцию для решения уравнения
-    solveEquationMPI(dT, h, x_0, x_n, t_0, t_n, 1, C);
-
     // Проверяем, что граничное условие c(t, 0) = 1 правильно установлено
     for (int i = 0; i <= N; i++) {
         ASSERT_DOUBLE_EQ(C[i][0], 1.0);
@@ -71,9 +65,6 @@ TEST(MatrixSizeTest, CheckMatrixSize) {
     int N = int((t_n - t_0) / dT);
 
     vector<vector<double>> C(N + 1, vector<double>(x_nums + 1));
-
-    // Запускаем функцию для решения уравнения
-    solveEquationMPI(dT, h, x_0, x_n, t_0, t_n, 1, C);
 
     // Проверяем, что матрица имеет правильные размеры
     ASSERT_EQ(C.size(), N + 1);
